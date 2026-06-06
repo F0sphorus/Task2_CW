@@ -1,0 +1,60 @@
+@startuml
+left to right direction
+
+actor Member
+actor Librarian
+actor Admin
+actor "Payment Gateway" as PaymentGateway
+
+rectangle "Library Management System" {
+  usecase "Register Account" as UC1
+  usecase "Login" as UC2
+  usecase "Search Catalog" as UC3
+  usecase "View Book Details" as UC4
+  usecase "Reserve Book" as UC5
+  usecase "Borrow Book" as UC6
+  usecase "Return Book" as UC7
+  usecase "Renew Loan" as UC8
+  usecase "Pay Fine" as UC9
+  usecase "View Borrowing History" as UC10
+  usecase "Manage Books" as UC11
+  usecase "Manage Members" as UC12
+  usecase "Issue/Collect Books" as UC13
+  usecase "Calculate Fine" as UC14
+  usecase "Process Payment" as UC15
+  usecase "Generate Reports" as UC16
+  usecase "Manage Users & Roles" as UC17
+  usecase "Configure System" as UC18
+}
+
+Member --> UC1
+Member --> UC2
+Member --> UC3
+Member --> UC4
+Member --> UC5
+Member --> UC6
+Member --> UC7
+Member --> UC8
+Member --> UC9
+Member --> UC10
+
+Librarian --> UC2
+Librarian --> UC11
+Librarian --> UC12
+Librarian --> UC13
+Librarian --> UC14
+Librarian --> UC16
+
+Admin --> UC2
+Admin --> UC17
+Admin --> UC18
+Admin --> UC16
+
+UC7 ..> UC14 : <<include>>
+UC9 ..> UC15 : <<include>>
+UC15 --> PaymentGateway
+UC6 ..> UC13 : <<include>>
+UC5 ..> UC3 : <<include>>
+UC4 ..> UC3 : <<include>>
+
+@enduml

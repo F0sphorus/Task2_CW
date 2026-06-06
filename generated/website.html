@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Library Management System</title>
+  <style>
+    :root {
+      --bg: #f7f9fc;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #d1d5db;
+      --accent: #2563eb;
+      --accent-dark: #1d4ed8;
+      --code-bg: #0f172a;
+      --code-text: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1d4ed8, #2563eb);
+      color: white;
+      padding: 32px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0 0 8px;
+      font-size: 2rem;
+    }
+
+    header p {
+      margin: 0;
+      opacity: 0.95;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    @media (min-width: 900px) {
+      .grid.two {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 1.25rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    li {
+      margin: 8px 0;
+    }
+
+    .uml-img {
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    pre {
+      margin: 0;
+      padding: 16px;
+      overflow: auto;
+      background: var(--code-bg);
+      color: var(--code-text);
+      border-radius: 10px;
+      font-size: 0.92rem;
+      line-height: 1.4;
+    }
+
+    code {
+      font-family: Consolas, Monaco, 'Courier New', monospace;
+    }
+
+    form {
+      display: grid;
+      gap: 12px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 140px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font: inherit;
+      resize: vertical;
+    }
+
+    button {
+      justify-self: start;
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    button:hover {
+      background: var(--accent-dark);
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-top: 8px;
+    }
+
+    .response {
+      margin-top: 12px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #f9fafb;
+      min-height: 48px;
+      white-space: pre-wrap;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Library Management System</h1>
+    <p>Requirements, UML Diagram, Flask API, and Business Problem Submission</p>
+  </header>
+
+  <main>
+    <div class="grid two">
+      <section>
+        <h2>System Requirements</h2>
+        <ul>
+          <li>User authentication for librarians and members.</li>
+          <li>Book catalog management: add, update, delete, search, and view books.</li>
+          <li>Member management for registration and profile updates.</li>
+          <li>Book borrowing, return tracking, and due date management.</li>
+          <li>Fine calculation for overdue books.</li>
+          <li>Reservation/hold support for unavailable books.</li>
+          <li>Inventory tracking with availability status.</li>
+          <li>Basic reporting for issued books, overdue books, and member activity.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>UML Diagram</h2>
+        <img src="uml.png" alt="UML Diagram for Library Management System" class="uml-img" />
+        <p class="note">Diagram loaded from <code>uml.png</code>.</p>
+      </section>
+    </div>
+
+    <section style="margin-top: 20px;">
+      <h2>Generated Flask API Code</h2>
+      <pre><code>from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+@app.route('/api/analysis', methods=['POST'])
+def analyze_business_problem():
+    data = request.get_json(silent=True) or {}
+    problem = data.get('problem', '').strip()
+
+    if not problem:
+        return jsonify({
+            'success': False,
+            'error': 'Business problem is required.'
+        }), 400
+
+    # Minimal generated response for the Library Management System
+    response = {
+        'success': True,
+        'system': 'Library Management System',
+        'received_problem': problem,
+        'recommended_features': [
+            'User authentication',
+            'Book catalog management',
+            'Borrow/return tracking',
+            'Fine calculation',
+            'Reservation management',
+            'Reports and analytics'
+        ]
+    }
+    return jsonify(response)
+
+@app.route('/')
+def home():
+    return jsonify({'message': 'Library Management System API is running.'})
+
+if __name__ == '__main__':
+    app.run(debug=True)</code></pre>
+    </section>
+
+    <section style="margin-top: 20px;">
+      <h2>Business Problem Submission</h2>
+      <form id="problemForm">
+        <div>
+          <label for="problem">Enter Business Problem</label>
+          <textarea id="problem" name="problem" placeholder="Example: The library needs to reduce overdue returns and improve book availability."></textarea>
+        </div>
+        <button type="submit">Submit to Flask API</button>
+        <div class="note">This form sends a POST request to <code>/api/analysis</code>.</div>
+      </form>
+      <div id="response" class="response">API response will appear here.</div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Library Management System Demo Website</p>
+  </footer>
+
+  <script>
+    const form = document.getElementById('problemForm');
+    const responseBox = document.getElementById('response');
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const problem = document.getElementById('problem').value.trim();
+
+      try {
+        const res = await fetch('/api/analysis', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ problem })
+        });
+
+        const data = await res.json();
+        responseBox.textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        responseBox.textContent = 'Error: Unable to connect to the Flask API.';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>AI Software Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+            line-height: 1.5;
+        }
+        input[type="text"] {
+            width: 70%;
+            padding: 10px;
+        }
+        button {
+            padding: 10px 16px;
+            cursor: pointer;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            overflow-x: auto;
+            border-radius: 6px;
+            white-space: pre-wrap;
+        }
+        .error {
+            background: #ffecec;
+            border: 1px solid #ff9f9f;
+            padding: 12px;
+            border-radius: 6px;
+            color: #900;
+        }
+        .links a {
+            display: inline-block;
+            margin-right: 14px;
+            margin-bottom: 8px;
+        }
+        img {
+            max-width: 400px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI Software Generator</h1>
+
+    <p>
+        Enter a business problem. The system will generate requirements,
+        PlantUML code, Flask API code, a simple website, and an AI image.
+    </p>
+
+    <form method="POST">
+        <label for="system_description">Enter Business Problem:</label>
+        <br><br>
+        <input
+            id="system_description"
+            type="text"
+            name="system_description"
+            placeholder="Example: Library Management System"
+            required
+        >
+        <button type="submit">Generate</button>
+    </form>
+
+    <hr>
+
+    {% if error %}
+        <div class="error">
+            <strong>Error:</strong> {{ error }}
+        </div>
+    {% endif %}
+
+    {% if result %}
+        <h2>Input Business Problem</h2>
+        <pre>{{ result.system_description }}</pre>
+
+        <h2>Requirements</h2>
+        <pre>{{ result.requirements }}</pre>
+
+        <h2>UML Diagram Code</h2>
+        <pre>{{ result.uml }}</pre>
+
+        <h2>Generated Flask API</h2>
+        <pre>{{ result.flask_code }}</pre>
+
+        <h2>Generated Website Code</h2>
+        <pre>{{ result.website_code }}</pre>
+
+        {% if result.image_path %}
+            <h2>AI Generated Image</h2>
+            <img src="/{{ result.image_path }}" alt="AI Generated Image">
+        {% elif result.image_error %}
+            <h2>AI Generated Image</h2>
+            <div class="error">
+                Image generation failed, but the text/code outputs were generated.<br>
+                {{ result.image_error }}
+            </div>
+        {% endif %}
+
+        <h2>Generated Files</h2>
+        <div class="links">
+            <a href="/generated/requirements.md" target="_blank">Open Requirements</a>
+            <a href="/generated/uml.puml" target="_blank">Open UML Code</a>
+            <a href="/generated/flask_api.py" target="_blank">Open Flask API Code</a>
+            <a href="/generated/website.html" target="_blank">Open Generated Website</a>
+            {% if result.image_path %}
+                <a href="/{{ result.image_path }}" target="_blank">Open Generated Image</a>
+            {% endif %}
+        </div>
+    {% endif %}
+</body>
+</html>
